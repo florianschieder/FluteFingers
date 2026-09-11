@@ -6,6 +6,11 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+	<OutputPath>$(SolutionDir)$(Platform)\$(Configuration)\</OutputPath>
+	<PlatformTarget>$(Platform)</PlatformTarget>
+	<Platforms>x86;x64</Platforms>
+	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	<RunWorkingDirectory>$(OutputPath)</RunWorkingDirectory>
   </PropertyGroup>
 
   <ItemGroup>

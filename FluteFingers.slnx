@@ -1,11 +1,13 @@
 <Solution>
   <Configurations>
-    <Platform Name="Any CPU" />
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
   <Project Path="core-clrbridge/core-clrbridge.vcxproj" Id="3c626ed7-f3fe-e947-f9d4-f807b0f76308" />
   <Project Path="core/core.vcxproj" Id="5c27df74-560f-44d4-9f11-aaf5ac606df6" />
   <Project Path="core-tests/core-tests.vcxproj" Id="ddd82c4c-6a01-5027-5afd-362449229265" />
-  <Project Path="ui/ui.csproj" Id="5bb7368a-3b94-49f9-b793-27d808c27ad5" />
+  <Project Path="ui/ui.csproj" Id="5bb7368a-3b94-49f9-b793-27d808c27ad5">
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
 </Solution>
