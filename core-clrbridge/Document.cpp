@@ -1,6 +1,10 @@
-#include "../core/Document.h"
+#include <msclr/marshal.h>
 
 #include "CLRBridge.h"
+
+#include "../core/Document.h"
+
+using namespace msclr::interop;
 
 public ref class FluteFingers::Core::Document
 {
@@ -16,15 +20,19 @@ public:
 		this->Systems = raw.systems;
 	}
 
-	static Document^ FromCapXML10(System::String^ path)
+	static Document^ FromCapXML10(System::String^ refPath)
 	{
-		// TODO System::String^ --> const std::string&
-		return gcnew Document(::loadCapXML10("TODO"));
+		const auto context = gcnew marshal_context();
+		const auto& path = context->marshal_as<const char*>(refPath);
+		const auto lowLevelDocument = ::loadCapXML10(path);
+		return gcnew Document(lowLevelDocument);
 	}
 
-	static Document^ FromMusicXML(System::String^ path)
+	static Document^ FromMusicXML(System::String^ refPath)
 	{
-		// TODO System::String^ --> const std::string&
-		return gcnew Document(::loadMusicXML("TODO"));
+		const auto context = gcnew marshal_context();
+		const auto& path = context->marshal_as<const char*>(refPath);
+		const auto lowLevelDocument = ::loadMusicXML(path);
+		return gcnew Document(lowLevelDocument);
 	}
 };
