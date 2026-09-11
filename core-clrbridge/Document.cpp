@@ -6,18 +6,50 @@
 
 using namespace msclr::interop;
 
+// TODO document and test heavily, source out and publish as NuGet package
+template <class T> public ref class Box
+{
+protected:
+	T* inner;
+
+public:
+	Box(T value)
+	{
+		this->inner = new T(std::move(value));
+	}
+
+	~Box()
+	{
+		delete this->inner;
+	}
+
+	T GetValue()
+	{
+		return *this->inner;
+	}
+};
+
 public ref class FluteFingers::Core::Document
 {
-public:
-	// TODO readonly properties & encapsulate ::Document somehow...
-	int Bars;
-	int Systems;
+private:
+	Box<::Document>^ inner;
 
-	// TODO idiomatic constructor definition?
-	Document(::Document raw)
+	// TODO overthink namespace structure in core project
+	Document(::Document document)
 	{
-		this->Bars = raw.bars;
-		this->Systems = raw.systems;
+		this->inner = gcnew Box<::Document>(document);
+	}
+
+public:
+	property System::Int64 Bars {
+		System::Int64 get() {
+			return this->inner->GetValue().bars;
+		}
+	}
+	property System::Int64 Systems {
+		System::Int64 get() {
+			return this->inner->GetValue().systems;
+		}
 	}
 
 	static Document^ FromCapXML10(System::String^ refPath)
