@@ -2,42 +2,21 @@
 
 #include "CLRBridge.h"
 
+#include "../clr-wrappers/CLRWrappers.h"
 #include "../core/Document.h"
 
 using namespace msclr::interop;
-
-// TODO document and test heavily, source out and publish as NuGet package
-template <class T> public ref class Box
-{
-protected:
-	T* inner;
-
-public:
-	Box(T value)
-	{
-		this->inner = new T(std::move(value));
-	}
-
-	~Box()
-	{
-		delete this->inner;
-	}
-
-	T GetValue()
-	{
-		return *this->inner;
-	}
-};
+using namespace CLRWrappers;
 
 public ref class FluteFingers::Core::Document
 {
 private:
-	Box<::Document>^ inner;
+	OwnedBox<::Document>^ inner;
 
 	// TODO overthink namespace structure in core project
 	Document(::Document document)
 	{
-		this->inner = gcnew Box<::Document>(document);
+		this->inner = gcnew OwnedBox<::Document>(document);
 	}
 
 public:
